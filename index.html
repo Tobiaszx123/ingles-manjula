@@ -1,0 +1,885 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inglés con Manjula</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F4B400">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800&display=swap">
+<style>
+/* Layout: una columna tipo app de celular (máx 480px), camino en zigzag, hoja inferior para corrección con Manjula en la esquina. Paleta "pancho": mostaza, kétchup y salchicha. */
+:root{
+  --bg:#FFF6DE; --surface:#FFFFFF; --ink:#3A2416; --muted:#8A6F5C; --line:#EEDDBF;
+  --mustard:#F4B400; --mustard-deep:#C98F00; --on-mustard:#3A2416;
+  --ketchup:#E0453A; --ketchup-deep:#A92E25;
+  --green:#3A9E48; --green-deep:#2A7535; --green-bg:#E2F4DF; --red-bg:#FCE3DF;
+  --lock:#DCD0BF; --lock-ink:#9A8A78;
+  --dog:#C27434; --dog-dark:#8B4C1F; --dog-light:#EDB98A; --nose:#2A1A10; --pink:#F48FA3; --white:#FFFFFF;
+  --display:'Baloo 2', 'Arial Rounded MT Bold', ui-rounded, system-ui, sans-serif;
+  --body:'Nunito', ui-rounded, system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#1E1510; --surface:#2B1F18; --ink:#F7EADB; --muted:#C2A891; --line:#45352A;
+  --green-bg:#1E3A22; --red-bg:#4A1E1A; --lock:#463A31; --lock-ink:#8F7F70; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#1E1510; --surface:#2B1F18; --ink:#F7EADB; --muted:#C2A891; --line:#45352A;
+  --green-bg:#1E3A22; --red-bg:#4A1E1A; --lock:#463A31; --lock-ink:#8F7F70; color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;-webkit-tap-highlight-color:transparent;overscroll-behavior-y:none}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;touch-action:manipulation}
+button:focus-visible,input:focus-visible{outline:3px solid var(--ketchup);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.1;text-wrap:balance}
+#app{max-width:480px;margin:0 auto;min-height:100%;position:relative}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* ---------- Manjula ---------- */
+.dog{display:block;overflow:visible}
+.dog .tail{transform-origin:44px 64px;animation:wag .35s ease-in-out infinite alternate}
+.dog .eye{transform-origin:186px 38px;animation:blink 4s infinite}
+.dog .ear{transform-origin:168px 32px;transition:transform .3s}
+.dog .tongue,.dog .brow{opacity:0;transition:opacity .2s}
+.dog.idle .all{animation:breathe 2.4s ease-in-out infinite}
+.dog.walk .all{animation:trot .45s ease-in-out infinite alternate}
+.dog.walk .legA{transform-origin:center top;transform-box:fill-box;animation:step .45s ease-in-out infinite alternate}
+.dog.walk .legB{transform-origin:center top;transform-box:fill-box;animation:step .45s ease-in-out infinite alternate-reverse}
+.dog.happy .all{animation:hop .55s ease-in-out infinite}
+.dog.happy .tongue{opacity:1}
+.dog.happy .tail{animation-duration:.15s}
+.dog.sad .ear{transform:rotate(14deg)}
+.dog.sad .brow{opacity:1}
+.dog.sad .tail{animation:droop 1.6s ease-in-out infinite alternate}
+.dog.sad .all{animation:none}
+@keyframes wag{from{transform:rotate(-18deg)}to{transform:rotate(22deg)}}
+@keyframes droop{from{transform:rotate(-55deg)}to{transform:rotate(-45deg)}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes breathe{50%{transform:translateY(-2px) scaleY(1.01)}}
+@keyframes trot{to{transform:translateY(-3px)}}
+@keyframes step{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
+@keyframes hop{0%,100%{transform:translateY(0)}40%{transform:translateY(-14px)}}
+@media (prefers-reduced-motion:reduce){.dog *, .dog .all{animation:none!important}}
+
+/* ---------- Botones ---------- */
+.btn{display:block;width:100%;padding:15px 18px;border-radius:16px;font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:.02em;text-transform:uppercase;transition:transform .08s}
+.btn:active{transform:translateY(3px)}
+.btn.primary{background:var(--mustard);color:var(--on-mustard);box-shadow:0 4px 0 var(--mustard-deep)}
+.btn.green{background:var(--green);color:var(--white);box-shadow:0 4px 0 var(--green-deep)}
+.btn.red{background:var(--ketchup);color:var(--white);box-shadow:0 4px 0 var(--ketchup-deep)}
+.btn.ghost{background:var(--surface);border:2px solid var(--line);box-shadow:0 3px 0 var(--line)}
+.btn:disabled{background:var(--lock);color:var(--lock-ink);box-shadow:0 4px 0 var(--lock);cursor:default}
+.btn:disabled:active{transform:none}
+
+/* ---------- Bienvenida ---------- */
+.welcome{min-height:100%;display:flex;flex-direction:column;justify-content:center;gap:22px;padding-block:32px}
+.welcome .dog{width:min(78%,300px);margin:0 auto}
+.welcome h1{font-size:34px;text-align:center}
+.welcome p{text-align:center;color:var(--muted);margin:0;line-height:1.5}
+.field{width:100%;font:inherit;font-size:20px;font-weight:700;padding:14px 16px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--ink)}
+
+/* ---------- Inicio ---------- */
+.home{padding-block:14px calc(96px + env(safe-area-inset-bottom,0px))}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.book{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.top h1{font-size:34px;color:var(--ketchup);word-break:break-word}
+.pills{display:flex;gap:8px;flex-shrink:0;padding-top:4px}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:999px;background:var(--surface);border:2px solid var(--line);font-weight:800;font-size:15px;font-variant-numeric:tabular-nums}
+.hero{margin-top:14px;display:grid;grid-template-columns:44% 1fr;align-items:end;gap:6px}
+.hero .dog{width:100%}
+.bubble{position:relative;background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:12px 14px;font-weight:700;line-height:1.35;font-size:15px;margin-bottom:28px}
+.bubble::before{content:"";position:absolute;left:-10px;bottom:16px;width:16px;height:16px;background:var(--surface);border-left:2px solid var(--line);border-bottom:2px solid var(--line);transform:rotate(45deg)}
+.goal{margin-top:6px;background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:12px 14px}
+.goal-row{display:flex;justify-content:space-between;font-weight:800;font-size:14px;margin-bottom:8px}
+.track{height:14px;border-radius:99px;background:var(--line);overflow:hidden}
+.track i{display:block;height:100%;border-radius:99px;background:var(--mustard);transition:width .4s}
+.month{margin:30px 0 8px;display:flex;align-items:center;gap:10px}
+.month b{background:var(--ink);color:var(--bg);font-family:var(--display);padding:4px 12px;border-radius:10px;font-size:15px;white-space:nowrap}
+.month span{font-weight:800;color:var(--muted);font-size:14px}
+.path{display:flex;flex-direction:column;align-items:center;gap:8px}
+.step{display:flex;flex-direction:column;align-items:center;width:150px;transform:translateX(var(--off,0))}
+.node{width:78px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:34px;background:var(--mustard);box-shadow:0 7px 0 var(--mustard-deep);position:relative;transition:transform .1s}
+.node:active{transform:translateY(5px);box-shadow:0 2px 0 var(--mustard-deep)}
+.node.done{background:var(--green);box-shadow:0 7px 0 var(--green-deep)}
+.node.locked{background:var(--lock);box-shadow:0 7px 0 var(--lock-ink);filter:grayscale(1);opacity:.75}
+.node.current::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:4px solid var(--mustard);opacity:.5;animation:pulse 1.6s ease-out infinite}
+@keyframes pulse{from{transform:scale(.92);opacity:.7}to{transform:scale(1.15);opacity:0}}
+.stars{margin-top:12px;font-size:16px;letter-spacing:2px;color:var(--mustard-deep)}
+.stars .off{color:var(--line)}
+.nlabel{font-weight:800;font-size:14px;text-align:center;line-height:1.2;max-width:150px}
+.walker{width:120px;margin:22px auto 0}
+
+/* ---------- Navegación ---------- */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:2px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav-in{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr)}
+.nav button{padding:10px 4px 12px;display:flex;flex-direction:column;align-items:center;gap:2px;font-weight:800;font-size:12px;color:var(--muted)}
+.nav button span{font-size:24px;filter:grayscale(1);opacity:.6}
+.nav button.on{color:var(--ketchup)}
+.nav button.on span{filter:none;opacity:1}
+
+/* ---------- Hoja modal ---------- */
+.overlay{position:fixed;inset:0;z-index:40;background:rgb(0 0 0 / .4);display:flex;align-items:flex-end;justify-content:center;animation:fade .2s}
+.sheet{width:100%;max-width:480px;background:var(--surface);border-radius:24px 24px 0 0;padding-top:22px;padding-bottom:calc(22px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px;animation:up .25s ease-out}
+.sheet h2{font-size:26px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:6px 12px;border-radius:999px;font-weight:800;font-size:13px;background:var(--bg);border:2px solid var(--line)}
+.chip.lvl-Básico{border-color:var(--green);color:var(--green)}
+.chip.lvl-Intermedio{border-color:var(--mustard-deep);color:var(--mustard-deep)}
+.chip.lvl-Avanzado{border-color:var(--ketchup);color:var(--ketchup)}
+.muted{color:var(--muted);line-height:1.45;margin:0;font-size:15px}
+@keyframes fade{from{opacity:0}}
+@keyframes up{from{transform:translateY(100%)}}
+
+/* ---------- Mini clase ---------- */
+.screen{padding-block:16px 32px;display:flex;flex-direction:column;gap:16px;min-height:100%}
+.backrow{display:flex;align-items:center;gap:10px}
+.iconbtn{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;color:var(--muted);flex-shrink:0}
+.teach{display:grid;grid-template-columns:34% 1fr;gap:8px;align-items:end}
+.card{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:16px}
+.tip{white-space:pre-line;line-height:1.55;font-size:16px}
+.tip b{color:var(--ketchup)}
+.ex-list{display:flex;flex-direction:column;gap:8px}
+.ex{display:flex;align-items:center;gap:10px;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:10px 12px;text-align:left;font-weight:700;width:100%}
+.ex .spk{flex-shrink:0}
+.spk{width:40px;height:40px;border-radius:12px;background:var(--mustard);display:grid;place-items:center;font-size:19px;box-shadow:0 3px 0 var(--mustard-deep)}
+
+/* ---------- Lección ---------- */
+.lesson{min-height:100%;display:flex;flex-direction:column}
+.lhead{display:flex;align-items:center;gap:10px;padding-block:12px 4px}
+.lhead .track{flex:1;height:16px}
+.lhead .track i{background:var(--green)}
+.lbody{flex:1;padding-block:14px calc(120px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:18px}
+.qlabel{font-family:var(--display);font-weight:800;font-size:23px;line-height:1.2}
+.qsub{font-size:20px;font-weight:800;background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:14px 16px;line-height:1.35}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{width:100%;text-align:left;padding:15px 16px;border-radius:16px;background:var(--surface);border:2px solid var(--line);box-shadow:0 4px 0 var(--line);font-weight:800;font-size:18px}
+.opt.sel{border-color:var(--mustard-deep);background:color-mix(in srgb,var(--mustard) 22%,var(--surface));box-shadow:0 4px 0 var(--mustard-deep)}
+.opt.right{border-color:var(--green);background:var(--green-bg);box-shadow:0 4px 0 var(--green)}
+.opt.wrong{border-color:var(--ketchup);background:var(--red-bg);box-shadow:0 4px 0 var(--ketchup)}
+.sentence{font-size:22px;font-weight:800;line-height:1.7}
+.blank{display:inline-block;min-width:80px;border-bottom:3px solid var(--ink);text-align:center;padding:0 6px;color:var(--ketchup)}
+.listen-row{display:flex;gap:14px;justify-content:center;padding-block:6px}
+.bigspk{width:96px;height:96px;border-radius:24px;background:var(--mustard);box-shadow:0 6px 0 var(--mustard-deep);font-size:44px;display:grid;place-items:center}
+.bigspk.slow{width:70px;height:70px;font-size:30px;align-self:end;background:var(--surface);border:2px solid var(--line);box-shadow:0 5px 0 var(--line)}
+.answer-zone{min-height:120px;border-bottom:2px solid var(--line);border-top:2px solid var(--line);padding-block:10px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;background-image:repeating-linear-gradient(transparent 0 57px,var(--line) 57px 59px)}
+.bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.tile{padding:10px 14px;border-radius:12px;background:var(--surface);border:2px solid var(--line);box-shadow:0 3px 0 var(--line);font-weight:800;font-size:18px}
+.tile.used{visibility:hidden}
+.write{width:100%;min-height:110px;font:inherit;font-size:20px;font-weight:700;padding:14px;border-radius:16px;border:2px solid var(--line);background:var(--surface);color:var(--ink);resize:none}
+.lfoot{position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--bg);border-top:2px solid var(--line)}
+.lfoot-in{max-width:480px;margin:0 auto;padding-top:14px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+
+/* ---------- Corrección con Manjula ---------- */
+.fb{position:fixed;left:0;right:0;bottom:0;z-index:30;animation:up .25s ease-out}
+.fb-in{max-width:480px;margin:0 auto;position:relative;border-radius:24px 24px 0 0;padding-top:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px}
+.fb.ok .fb-in{background:var(--green-bg)}
+.fb.bad .fb-in{background:var(--red-bg)}
+.fb-top{display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:start}
+.fb-dog{width:110px;margin-top:-46px;margin-left:-8px}
+.fb-title{font-family:var(--display);font-weight:800;font-size:24px}
+.fb.ok .fb-title{color:var(--green)}
+.fb.bad .fb-title{color:var(--ketchup)}
+.fb-bubble{background:var(--surface);border-radius:16px;padding:12px 14px;line-height:1.45;font-size:15.5px;max-height:34vh;overflow:auto}
+.fb-bubble .lab{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.fb-ans{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;margin:4px 0 8px}
+.fb-ans .spk{width:36px;height:36px;font-size:17px}
+.yours{text-decoration:line-through;color:var(--ketchup);font-weight:700}
+
+/* ---------- Resultados / práctica / perfil ---------- */
+.result{align-items:center;text-align:center;justify-content:center}
+.result .dog{width:min(70%,260px)}
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%}
+.stat{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:12px 6px}
+.stat b{display:block;font-family:var(--display);font-size:26px;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.col{display:flex;flex-direction:column;gap:12px;width:100%}
+.page{padding-block:18px calc(100px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
+.page h1{font-size:30px}
+.lbl{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.choose{display:flex;flex-wrap:wrap;gap:8px}
+.choose button{padding:9px 14px;border-radius:999px;border:2px solid var(--line);background:var(--surface);font-weight:800;font-size:15px}
+.choose button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:2px solid var(--line);font-weight:700}
+.row:last-child{border-bottom:0}
+.switch{width:54px;height:32px;border-radius:99px;background:var(--lock);position:relative;flex-shrink:0;transition:background .2s}
+.switch::after{content:"";position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:50%;background:var(--white);transition:transform .2s}
+.switch.on{background:var(--green)}
+.switch.on::after{transform:translateX(22px)}
+.mistake-card{display:grid;grid-template-columns:80px 1fr;gap:12px;align-items:center}
+</style>
+
+<div id="app"></div>
+
+<script>
+/* =========================================================
+   CONTENIDO: 16 unidades ≈ 4 meses (1 unidad por semana)
+   Tipos: mc = opción múltiple · fl = completar · od = ordenar
+          ls = escuchar · wr = escribir
+   ========================================================= */
+const mc=(q,a,o,e,say)=>({t:"mc",q,a,o,e,say});
+const fl=(s,a,o,e)=>({t:"fill",s,a,o,e});
+const od=(es,a,x,e)=>({t:"ord",es,a:[].concat(a),x,e});
+const ls=(a,o,e)=>({t:"lis",a,o,e});
+const wr=(es,a,e)=>({t:"wr",es,a:[].concat(a),e});
+
+const MONTHS=[
+  {n:"Mes 1",t:"Primeros pasos"},
+  {n:"Mes 2",t:"Mi día a día"},
+  {n:"Mes 3",t:"Contar historias"},
+  {n:"Mes 4",t:"Hablar con soltura"}
+];
+
+const UNITS=[
+{ic:"👋",title:"Saludos",cat:"Frases",lvl:"Básico",
+ tip:"<b>Hello</b> = Hola · <b>Hi</b> = Hola (informal)\n<b>Good morning</b> = Buenos días\n<b>Good afternoon</b> = Buenas tardes\n<b>Good evening</b> = Buenas noches (al llegar)\n<b>Good night</b> = Buenas noches (al irse a dormir)\n<b>How are you?</b> → <b>I'm fine, thank you.</b>\n<b>My name is…</b> = Me llamo…\n<b>Nice to meet you</b> = Mucho gusto",
+ ex:["Hello! My name is Ana.","Good morning!","How are you?","I'm fine, thank you.","Nice to meet you."],
+ qs:[
+  mc("¿Cómo se dice «Buenos días»?","Good morning",["Good night","Good morning","Good evening"],"«Morning» es la mañana. «Good night» solo se usa para despedirse a la noche."),
+  mc("¿Qué significa «Goodbye»?","Adiós",["Hola","Adiós","Gracias"],"«Goodbye» (o «Bye») es adiós.","Goodbye"),
+  fl("___ name is Ana.","My",["My","I","Me"],"Para decir «mi nombre» usamos «my». «I» significa «yo»."),
+  od("¿Cómo estás?","How are you",["is","do"],"La pregunta empieza con «How» (cómo) + are + you."),
+  ls("Nice to meet you",["Nice to meet you","Nice to see you","Nice to eat you"],"«Meet» = conocer a alguien por primera vez. Mucho gusto = Nice to meet you."),
+  wr("Gracias",["Thank you","thanks"],"Se dice «Thank you» o, más informal, «Thanks»."),
+  mc("Te preguntan «How are you?». ¿Qué respondés?","I'm fine, thank you.",["I'm fine, thank you.","My name is Ana.","Good night."],"A «How are you?» se responde «I'm fine» (estoy bien)."),
+  fl("Good ___! (al irse a dormir)","night",["morning","night","day"],"«Good night» es para despedirse de noche. Para saludar a la noche se dice «Good evening»."),
+  od("Mucho gusto en conocerte","Nice to meet you",["see","am"],"Frase fija: Nice to meet you."),
+  ls("Good afternoon",["Good afternoon","Good morning","Good evening"],"«Afternoon» = la tarde, después del mediodía."),
+  wr("Hola",["Hello","hi"],"«Hello» es hola. «Hi» es más informal."),
+  mc("¿Cómo se dice «Por favor»?","Please",["Please","Sorry","Thanks"],"«Please» = por favor. «Sorry» = perdón. «Thanks» = gracias."),
+  od("Mi nombre es Ana","My name is Ana",["I","am"],"My (mi) + name (nombre) + is (es)."),
+  wr("Perdón (para disculparse)",["Sorry","I'm sorry","excuse me"],"«Sorry» para pedir disculpas. «Excuse me» para pedir permiso.")
+ ]},
+{ic:"🙋",title:"Verbo To Be",cat:"Gramática",lvl:"Básico",
+ tip:"El verbo <b>to be</b> es SER y ESTAR a la vez.\n\n<b>I am</b> (I'm) = yo soy / estoy\n<b>You are</b> (you're) = vos sos / estás\n<b>He / She / It is</b> (he's, she's, it's)\n<b>We are</b> = nosotros somos\n<b>They are</b> = ellos son\n\nNegativo: <b>I am not</b>, <b>she is not</b> (isn't)\nPregunta: el verbo va primero → <b>Are you ok?</b>",
+ ex:["I am happy.","She is a teacher.","We are friends.","Are you okay?","He isn't tired."],
+ qs:[
+  fl("I ___ happy.","am",["am","is","are"],"Con «I» siempre va «am»: I am."),
+  fl("She ___ a teacher.","is",["am","is","are"],"Con he, she, it va «is»."),
+  fl("They ___ my friends.","are",["is","are","am"],"Con we, you, they va «are»."),
+  fl("You ___ very nice.","are",["is","am","are"],"Con «you» va «are», aunque sea una sola persona."),
+  mc("¿Cómo se dice «Él está cansado»?","He is tired",["He is tired","He are tired","He am tired"],"He → is. Tired = cansado."),
+  od("Nosotros somos amigos","We are friends",["is","am"],"We → are."),
+  wr("Yo soy Ana",["I am Ana"],"«I am» se puede abreviar «I'm»: I'm Ana."),
+  mc("¿Cuál es la forma corta de «She is»?","She's",["She's","Shes'","She're"],"La contracción es she's: el apóstrofo reemplaza la «i»."),
+  fl("It ___ cold today.","is",["are","is","am"],"«It» (para cosas, animales y el clima) usa «is»."),
+  ls("We are at home",["We are at home","We were at home","He is at home"],"«We are» = estamos. «At home» = en casa."),
+  fl("I ___ not hungry.","am",["am","is","do"],"Negativo: I am not. Se agrega «not» después del verbo."),
+  mc("Pregunta: «¿Estás bien?»","Are you okay?",["Are you okay?","You are okay?","Is you okay?"],"Para preguntar, el verbo va primero: Are you…?"),
+  od("Ella no es mi hermana","She is not my sister",["are","does"],"Negativo: is + not."),
+  wr("Ellos están aquí",["They are here"],"They → are. «Here» = aquí.")
+ ]},
+{ic:"🔢",title:"Artículos y números",cat:"Vocabulario",lvl:"Básico",
+ tip:"<b>a</b> = un/una → antes de sonido de consonante: <b>a cat</b>\n<b>an</b> = un/una → antes de sonido de vocal: <b>an apple</b>\n<b>the</b> = el, la, los, las\n\n1 one · 2 two · 3 three · 4 four · 5 five\n6 six · 7 seven · 8 eight · 9 nine · 10 ten\n\nPlural: casi siempre + s → <b>two dogs</b>",
+ ex:["a dog","an apple","the house","one, two, three, four, five","six, seven, eight, nine, ten"],
+ qs:[
+  fl("I have ___ apple.","an",["a","an","the"],"«Apple» empieza con sonido de vocal → an."),
+  fl("She has ___ dog.","a",["a","an","two"],"«Dog» empieza con consonante → a."),
+  mc("¿Cómo se dice «siete»?","seven",["six","seven","eleven"],"7 = seven."),
+  ls("three",["three","tree","free"],"«Three» (3) se pronuncia con la lengua entre los dientes (th). «Tree» es árbol."),
+  wr("cinco",["five"],"5 = five."),
+  fl("It is ___ orange.","an",["a","an"],"«Orange» empieza con vocal → an."),
+  mc("¿Qué número es «eight»?","8",["3","8","18"],"Eight = 8. Se pronuncia «eit».","eight"),
+  od("El gato es negro","The cat is black",["a","an"],"«The» = el/la, cuando hablamos de algo específico."),
+  fl("He is ___ engineer.","an",["a","an"],"«Engineer» empieza con sonido de vocal → an."),
+  ls("ten",["ten","then","tan"],"Ten = 10."),
+  mc("«Two dogs» significa…","Dos perros",["Dos perros","Un perro","Diez perros"],"Two = 2. El plural agrega «s»: dogs.","Two dogs"),
+  wr("nueve",["nine"],"9 = nine."),
+  fl("I need ___ umbrella.","an",["a","an"],"«Umbrella» empieza con sonido de vocal → an."),
+  mc("¿Plural de «child» (niño)?","children",["childs","children","childes"],"Algunos plurales son irregulares: child → children.")
+ ]},
+{ic:"👨‍👩‍👧",title:"La familia",cat:"Vocabulario",lvl:"Básico",
+ tip:"Posesivos (van antes de la cosa):\n<b>my</b> = mi · <b>your</b> = tu / su (de usted)\n<b>his</b> = de él · <b>her</b> = de ella\n<b>our</b> = nuestro · <b>their</b> = de ellos\n\n<b>mother</b> madre · <b>father</b> padre\n<b>sister</b> hermana · <b>brother</b> hermano\n<b>husband</b> esposo · <b>wife</b> esposa\n<b>son</b> hijo · <b>daughter</b> hija",
+ ex:["This is my husband.","Her name is Manjula.","His brother is tall.","Our house is big.","My mother and my father."],
+ qs:[
+  fl("This is ___ husband. (mi)","my",["my","me","I"],"My = mi."),
+  fl("Ana loves ___ dog. (de ella)","her",["his","her","she"],"Para algo de una mujer: her."),
+  fl("Tom and ___ sister. (de él)","his",["his","her","he"],"Para algo de un hombre: his."),
+  mc("¿Cómo se dice «esposa»?","wife",["wife","life","woman"],"Wife = esposa. Husband = esposo."),
+  mc("«Daughter» significa…","hija",["hija","hijo","hermana"],"Daughter = hija. Son = hijo.","daughter"),
+  ls("my brother",["my brother","my mother","my father"],"Brother = hermano."),
+  od("Nuestra casa es grande","Our house is big",["we","us"],"Our = nuestro/a."),
+  wr("mi madre",["my mother","my mom","my mum"],"Mother (formal) o mom (informal)."),
+  fl("They love ___ children.","their",["there","their","they"],"Their = de ellos. ¡Ojo! «There» significa allí."),
+  mc("¿Cómo se dice «su nombre» (de usted)?","your name",["your name","you name","yours name"],"Your = tu / su (de usted)."),
+  od("Ella es mi hermana","She is my sister",["her","me"],"She is (ella es) + my sister."),
+  ls("her father",["her father","his father","her mother"],"Her = de ella."),
+  wr("su hijo (de él)",["his son"],"His = de él. Son = hijo."),
+  mc("«Grandmother» significa…","abuela",["abuela","tía","madre"],"Grand + mother = abuela.","grandmother")
+ ]},
+{ic:"☕",title:"Presente simple",cat:"Gramática",lvl:"Básico",
+ tip:"Para hábitos y cosas que siempre son así.\n\n<b>I / you / we / they work</b>\n<b>He / she / it works</b> ← ¡se agrega -s!\n\nSi termina en -o, -ch, -sh → <b>-es</b>: go → <b>goes</b>, watch → <b>watches</b>\nConsonante + y → <b>-ies</b>: study → <b>studies</b>\nIrregular: have → <b>has</b>",
+ ex:["I drink coffee every morning.","She works in a hospital.","He goes to school by bus.","Manjula watches TV with me.","She has a car."],
+ qs:[
+  fl("She ___ in a hospital.","works",["work","works","working"],"Con he/she/it el verbo lleva -s."),
+  fl("I ___ coffee every morning.","drink",["drink","drinks","drinking"],"Con «I» no se agrega -s."),
+  fl("He ___ to school by bus.","goes",["go","gos","goes"],"«Go» termina en -o → goes."),
+  fl("My dog ___ a lot.","sleeps",["sleep","sleeps"],"«My dog» = it → sleeps."),
+  mc("«Ella tiene un auto»","She has a car",["She has a car","She have a car","She haves a car"],"Have es irregular: he/she/it → has."),
+  od("Nosotros vivimos en Argentina","We live in Argentina",["lives","is"],"We → live (sin -s)."),
+  wr("Yo trabajo",["I work"],"Work = trabajar. Con I, sin -s."),
+  fl("Manjula ___ TV with me.","watches",["watchs","watches","watch"],"Termina en -ch → watches."),
+  ls("She reads books",["She reads books","She read books","She needs books"],"Reads, con -s porque es «she»."),
+  mc("¿Cuál está bien?","They play football",["They plays football","They play football","They playing football"],"They → sin -s."),
+  od("Él come pizza los viernes","He eats pizza on Fridays",["eat","in"],"He → eats. Con días de la semana → on."),
+  wr("Ella habla inglés",["She speaks English"],"Speak + s → speaks. Los idiomas van con mayúscula: English."),
+  fl("The sun ___ in the east.","rises",["rise","rises"],"Verdades generales → presente simple. «The sun» = it → rises.")
+ ]},
+{ic:"❓",title:"Preguntas con Do",cat:"Gramática",lvl:"Básico",
+ tip:"Negar: <b>I / you / we / they don't</b> + verbo\n<b>He / she / it doesn't</b> + verbo (¡sin -s!)\n\nPreguntar: <b>Do you…?</b> · <b>Does she…?</b>\nRespuesta corta: <b>Yes, I do.</b> / <b>No, she doesn't.</b>\n\ndon't = do not · doesn't = does not",
+ ex:["I don't like onions.","She doesn't eat meat.","Do you speak English?","Does he work here?","Yes, I do."],
+ qs:[
+  fl("I ___ like onions.","don't",["don't","doesn't","not"],"Con I → don't."),
+  fl("She ___ eat meat.","doesn't",["don't","doesn't","isn't"],"Con she → doesn't."),
+  fl("___ you speak English?","Do",["Do","Does","Are"],"Pregunta con you → Do."),
+  fl("___ he work here?","Does",["Do","Does","Is"],"Pregunta con he → Does."),
+  mc("¿Cuál está bien?","He doesn't play tennis",["He doesn't plays tennis","He doesn't play tennis","He don't play tennis"],"Después de doesn't el verbo va SIN -s."),
+  od("¿Te gusta el chocolate?","Do you like chocolate",["does","are"],"Do + you + verbo."),
+  wr("Yo no entiendo",["I don't understand"],"Don't = do not. Understand = entender."),
+  mc("Respuesta corta a «Do you have a dog?»","Yes, I do.",["Yes, I do.","Yes, I have.","Yes, I am."],"Se responde con el mismo auxiliar: Yes, I do / No, I don't."),
+  ls("Does she live here?",["Does she live here?","Does she leave here?","Do she live here?"],"«Live» (vivir) se dice corto; «leave» (irse) se dice largo."),
+  od("Ella no trabaja los lunes","She doesn't work on Mondays",["works","in"],"Doesn't + verbo sin -s."),
+  fl("Where ___ they live?","do",["do","does","are"],"They → do."),
+  wr("¿Hablás español?",["Do you speak Spanish?"],"Do + you + verbo. Spanish con mayúscula."),
+  mc("«What do you do?» pregunta…","¿A qué te dedicás?",["¿A qué te dedicás?","¿Qué hiciste?","¿Qué estás haciendo ahora?"],"«What do you do?» es la forma de preguntar el trabajo de alguien.","What do you do?")
+ ]},
+{ic:"🍝",title:"En el restaurante",cat:"Frases",lvl:"Básico",
+ tip:"<b>I would like…</b> (I'd like) = Me gustaría… (forma educada)\n<b>Can I have the menu, please?</b>\n<b>A table for two, please.</b>\n<b>The bill, please.</b> = La cuenta, por favor.\n\n<b>water</b> agua · <b>bread</b> pan · <b>chicken</b> pollo\n<b>fish</b> pescado · <b>dessert</b> postre\n<b>breakfast</b> desayuno · <b>lunch</b> almuerzo · <b>dinner</b> cena",
+ ex:["A table for two, please.","Can I have the menu, please?","I'd like the chicken.","Anything else?","The bill, please."],
+ qs:[
+  mc("¿Cómo se dice «la cuenta, por favor»?","The bill, please",["The bill, please","The count, please","The account, please"],"En el restaurante la cuenta es «the bill» (en EE.UU. también «the check»)."),
+  fl("I ___ like a coffee, please.","would",["would","will","am"],"«I would like» = me gustaría. Es la forma educada de pedir."),
+  wr("agua",["water"],"Water = agua."),
+  ls("I'd like the chicken",["I'd like the chicken","I like the kitchen","I'd like the kitchen"],"Chicken = pollo; kitchen = cocina. ¡Suenan parecido!"),
+  mc("«Dessert» significa…","postre",["postre","desierto","cena"],"Dessert (doble s) = postre. Desert (una s) = desierto.","dessert"),
+  od("¿Me da el menú, por favor?","Can I have the menu please",["see","do"],"Para pedir algo se dice «Can I have…?»."),
+  mc("¿Cómo se dice «pescado»?","fish",["fish","fresh","fit"],"Fish = pescado (y también pez)."),
+  wr("pan",["bread"],"Bread = pan."),
+  fl("Are you ready to ___?","order",["order","buy","pay"],"«Order» = pedir comida en un restaurante."),
+  ls("A table for two, please",["A table for two, please","A table for you, please","A label for two, please"],"Table = mesa. «For two» = para dos."),
+  mc("El mozo pregunta «Anything else?». Significa…","¿Algo más?",["¿Algo más?","¿Otra mesa?","¿Está rico?"],"Anything else = algo más.","Anything else?"),
+  od("Me gustaría una ensalada","I'd like a salad",["an","want"],"I'd like = I would like."),
+  wr("desayuno",["breakfast"],"Breakfast = desayuno; lunch = almuerzo; dinner = cena.")
+ ]},
+{ic:"⏰",title:"La hora y la rutina",cat:"Vocabulario",lvl:"Básico",
+ tip:"<b>What time is it?</b> → <b>It's seven o'clock.</b> (en punto)\n<b>half past</b> = y media · <b>quarter past</b> = y cuarto\n<b>quarter to</b> = menos cuarto\n\nFrecuencia (van ANTES del verbo):\n<b>always</b> siempre · <b>usually</b> normalmente\n<b>sometimes</b> a veces · <b>never</b> nunca\n\nCon el verbo to be van DESPUÉS: <b>She is never late.</b>",
+ ex:["What time is it?","It's seven o'clock.","It's half past three.","I always get up at seven.","She is never late."],
+ qs:[
+  mc("«It's half past three» es…","3:30",["3:30","3:15","2:30"],"Half past = y media.","It's half past three"),
+  mc("¿Cómo se pregunta la hora?","What time is it?",["What time is it?","What hour is it?","How time is it?"],"Siempre se dice «What time is it?»."),
+  fl("I ___ get up at 7.","always",["always","ever","all"],"Always = siempre. Va antes del verbo."),
+  od("Nunca tomo té","I never drink tea",["don't","ever"],"«Never» ya es negativo: no se usa don't."),
+  ls("It's seven o'clock",["It's seven o'clock","It's eleven o'clock","It's seven thirty"],"O'clock = en punto."),
+  wr("a veces",["sometimes"],"Sometimes = a veces."),
+  mc("«Quarter to five» es…","4:45",["5:15","4:45","5:45"],"Quarter to = menos cuarto.","quarter to five"),
+  fl("She is ___ late.","never",["never","not never","no"],"Con el verbo to be, la frecuencia va DESPUÉS: She is never late."),
+  mc("¿Cómo se dice «almorzar»?","have lunch",["have lunch","make lunch","take lunch"],"Se dice «have lunch», «have breakfast», «have dinner»."),
+  od("Normalmente me acuesto a las once","I usually go to bed at eleven",["in","on"],"Para horas se usa «at»."),
+  wr("lunes",["Monday"],"Los días van con mayúscula: Monday."),
+  ls("every day",["every day","every way","very day"],"Every day = todos los días.")
+ ]},
+{ic:"🏃‍♀️",title:"Presente continuo",cat:"Gramática",lvl:"Intermedio",
+ tip:"Para lo que pasa AHORA:\n<b>am / is / are</b> + verbo<b>-ing</b>\n\n<b>I am eating.</b> · <b>She is sleeping.</b> · <b>They are playing.</b>\n\nVerbo corto que termina consonante-vocal-consonante → doble: run → <b>running</b>, sit → <b>sitting</b>\nTermina en -e → se quita: make → <b>making</b>\n\nHábitos → presente simple. Ahora → presente continuo.",
+ ex:["I am learning English.","She is reading a book.","What are you doing?","It is raining.","Look! Manjula is wagging her tail."],
+ qs:[
+  fl("I ___ cooking now.","am",["am","is","do"],"I am + -ing."),
+  fl("She is ___ a book.","reading",["read","reads","reading"],"Presente continuo: is + verbo-ing."),
+  fl("They ___ playing in the park.","are",["are","is","do"],"They → are."),
+  mc("¿Cómo se escribe «run» con -ing?","running",["runing","running","runeing"],"Consonante-vocal-consonante: se duplica la última letra → running."),
+  mc("¿Cómo se escribe «make» con -ing?","making",["makeing","making","makking"],"Si termina en -e, se quita la e → making."),
+  od("Estoy aprendiendo inglés","I am learning English",["learn","is"],"I am + learning."),
+  wr("Ella está durmiendo",["She is sleeping"],"She is + sleeping."),
+  ls("What are you doing?",["What are you doing?","What do you do?","Where are you going?"],"«What are you doing?» = ¿qué estás haciendo (ahora)?"),
+  fl("Look! Manjula ___ her tail.","is wagging",["wags","is wagging","wagging"],"«Look!» indica que pasa ahora → presente continuo."),
+  mc("¿Cuál está bien?","He is not working today",["He not working today","He is not working today","He does not working today"],"Negativo: is + not + -ing."),
+  od("¿Estás escuchando?","Are you listening",["do","listen"],"Pregunta: Are + you + -ing."),
+  fl("It ___ raining.","is",["is","are","am"],"It is raining = está lloviendo."),
+  fl("Every day I ___ to work.","walk",["walk","am walking"],"«Every day» es un hábito → presente simple.")
+ ]},
+{ic:"📦",title:"There is / There are",cat:"Gramática",lvl:"Intermedio",
+ tip:"<b>There is</b> = hay (una cosa) · <b>There are</b> = hay (varias)\nPregunta: <b>Is there…? / Are there…?</b>\n\n<b>in</b> = dentro · <b>on</b> = sobre\n<b>under</b> = debajo · <b>next to</b> = al lado\n<b>between</b> = entre · <b>behind</b> = detrás",
+ ex:["There is a cat in the garden.","There are three books on the table.","Is there a bathroom?","The keys are under the bed.","The bank is next to the park."],
+ qs:[
+  fl("___ a cat in the garden.","There is",["There is","There are","It is"],"Un solo gato → There is."),
+  fl("There ___ three books on the table.","are",["is","are"],"Plural → there are."),
+  mc("«The keys are under the bed»","Las llaves están debajo de la cama",["Las llaves están debajo de la cama","Las llaves están sobre la cama","Las llaves están al lado de la cama"],"Under = debajo.","The keys are under the bed"),
+  fl("The phone is ___ the table. (sobre)","on",["on","in","at"],"On = sobre una superficie."),
+  fl("The milk is ___ the fridge. (dentro)","in",["on","in","at"],"In = dentro de algo."),
+  od("Hay dos perros en la casa","There are two dogs in the house",["is","on"],"Dos perros → there are."),
+  ls("next to the bank",["next to the bank","next to the park","next to the band"],"Next to = al lado de."),
+  wr("¿Hay un baño?",["Is there a bathroom?","Is there a toilet?","Is there a restroom?"],"Pregunta: Is there…?"),
+  mc("¿Cómo se dice «detrás»?","behind",["behind","between","beside"],"Behind = detrás. Between = entre."),
+  fl("___ there any eggs?","Are",["Is","Are","Do"],"«Eggs» es plural → Are there any…?"),
+  od("Manjula está entre las sillas","Manjula is between the chairs",["behind","in"],"Between = entre."),
+  mc("«There isn't any sugar» significa…","No hay azúcar",["No hay azúcar","Hay poca azúcar","Hay azúcar"],"There isn't = no hay.","There isn't any sugar")
+ ]},
+{ic:"📜",title:"Pasado regular",cat:"Gramática",lvl:"Intermedio",
+ tip:"Verbos regulares: + <b>ed</b>\nwork → <b>worked</b> · play → <b>played</b>\nlive → <b>lived</b> · study → <b>studied</b>\n\nNegativo: <b>didn't</b> + verbo base → I didn't watch\nPregunta: <b>Did you</b> + verbo base…? → Did you call?\nRespuesta: <b>Yes, I did. / No, I didn't.</b>",
+ ex:["Yesterday I worked all day.","She studied English last year.","I didn't watch TV.","Did you call your mom?","We visited my parents."],
+ qs:[
+  fl("Yesterday I ___ all day.","worked",["work","worked","works"],"«Yesterday» (ayer) → pasado: worked."),
+  fl("She ___ English last year.","studied",["studyed","studied","studies"],"Consonante + y → ied: studied."),
+  fl("I ___ watch TV last night.","didn't",["don't","didn't","wasn't"],"Negativo en pasado: didn't + verbo base."),
+  fl("___ you call your mom?","Did",["Do","Did","Was"],"Pregunta en pasado: Did + verbo base."),
+  mc("¿Cuál está bien?","He didn't play",["He didn't played","He didn't play","He not played"],"Después de didn't el verbo vuelve a su forma base."),
+  od("Ayer cociné pasta","Yesterday I cooked pasta",["cook","did"],"Cook + ed → cooked."),
+  wr("Yo viví en España",["I lived in Spain"],"«Live» termina en e → solo se agrega d: lived."),
+  ls("We visited my parents",["We visited my parents","We visit my parents","We invited my parents"],"Visited = visitamos (pasado)."),
+  mc("«Did you like the movie?» — respuesta corta","Yes, I did.",["Yes, I did.","Yes, I liked.","Yes, I do."],"Se responde con did."),
+  fl("They ___ to the music.","listened",["listen","listened","listening"],"Listen + ed → listened."),
+  od("¿Miraste la película?","Did you watch the movie",["watched","do"],"Con did, el verbo va sin -ed."),
+  fl("The party ___ at 9.","started",["start","started","starts"],"Pasado regular: started (se pronuncia «startid»).")
+ ]},
+{ic:"🏖️",title:"Pasado irregular",cat:"Gramática",lvl:"Intermedio",
+ tip:"Muchos verbos comunes NO llevan -ed:\ngo → <b>went</b> · eat → <b>ate</b> · see → <b>saw</b>\nhave → <b>had</b> · make → <b>made</b> · buy → <b>bought</b>\ncome → <b>came</b> · take → <b>took</b>\n\nPasado de to be:\n<b>I / he / she / it was</b> · <b>you / we / they were</b>\n\nCon did siempre va el verbo base: <b>Did you go?</b>",
+ ex:["We went to the beach.","I ate pizza.","She bought a new dress.","I was tired yesterday.","Did you go?"],
+ qs:[
+  mc("Pasado de «go»","went",["goed","went","gone"],"Go → went (irregular)."),
+  mc("Pasado de «eat»","ate",["eated","ate","eaten"],"Eat → ate."),
+  fl("I ___ a movie yesterday.","saw",["see","saw","seed"],"See → saw."),
+  fl("She ___ a new dress.","bought",["buyed","bought","brought"],"Buy → bought. ¡Ojo! «brought» es de «bring» (traer)."),
+  fl("I ___ tired yesterday.","was",["was","were","am"],"I / he / she / it → was."),
+  fl("They ___ at home.","were",["was","were"],"You / we / they → were."),
+  od("Fuimos a la playa","We went to the beach",["go","goed"],"Go → went."),
+  wr("Yo comí",["I ate"],"Eat → ate."),
+  ls("He came home late",["He came home late","He comes home late","He come home late"],"Come → came."),
+  mc("¿Cuál es correcta?","Did you go?",["Did you went?","Did you go?","Did you gone?"],"Con did, siempre el verbo base: go."),
+  od("Ella tuvo un buen día","She had a good day",["have","has"],"Have → had."),
+  fl("We ___ a cake for Manjula.","made",["maked","made","make"],"Make → made."),
+  mc("Pasado de «take»","took",["taked","took","token"],"Take → took.")
+ ]},
+{ic:"🔮",title:"El futuro",cat:"Gramática",lvl:"Intermedio",
+ tip:"<b>will</b> + verbo → decisiones del momento, promesas, predicciones\n<b>I'll help you.</b> · <b>It will rain.</b>\nNegativo: <b>won't</b> (will not)\n\n<b>be going to</b> + verbo → planes ya decididos o algo que se ve venir\n<b>I'm going to travel.</b> · <b>Look at the clouds! It's going to rain.</b>",
+ ex:["I will call you tomorrow.","I'm going to visit my sister.","It won't rain tomorrow.","I'll see you tomorrow.","Will you marry me?"],
+ qs:[
+  fl("I ___ call you tomorrow.","will",["will","am","did"],"Promesa → will."),
+  fl("I'm going ___ visit my sister.","to",["to","for","at"],"Going to + verbo."),
+  fl("It ___ rain tomorrow.","won't",["won't","don't","isn't"],"Won't = will not."),
+  mc("Plan decidido: «Vamos a viajar en verano»","We are going to travel in summer",["We are going to travel in summer","We will traveling in summer","We going travel in summer"],"Plan ya decidido → be going to."),
+  od("Te voy a ayudar (promesa)","I will help you",["helping","am"],"Promesa → will + verbo."),
+  ls("I'll see you tomorrow",["I'll see you tomorrow","I see you tomorrow","I saw you tomorrow"],"I'll = I will."),
+  wr("Ella va a cocinar",["She is going to cook"],"She is going to + verbo."),
+  mc("Suena el teléfono. Decís…","I'll answer it!",["I'll answer it!","I'm going to answer it!","I answer it!"],"Decisión en el momento → will."),
+  fl("___ you marry me?","Will",["Will","Do","Are"],"Pregunta con will: Will you…?"),
+  od("No voy a trabajar mañana","I'm not going to work tomorrow",["will","am"],"Negativo: I'm not going to + verbo."),
+  fl("Look at those clouds! It ___ rain.","is going to",["is going to","will to","goes"],"Cuando hay evidencia (las nubes) → going to.")
+ ]},
+{ic:"📏",title:"Comparar cosas",cat:"Gramática",lvl:"Avanzado",
+ tip:"Adjetivo corto: + <b>er</b> / the + <b>est</b>\ntall → <b>taller</b> (más alto) → <b>the tallest</b> (el más alto)\nbig → <b>bigger</b> · hot → <b>hotter</b> · easy → <b>easier</b>\n\nAdjetivo largo: <b>more</b> / <b>the most</b>\nbeautiful → <b>more beautiful</b> → <b>the most beautiful</b>\n\nIrregulares: good → <b>better</b> → <b>the best</b> · bad → <b>worse</b> → <b>the worst</b>\n«que» se dice <b>than</b> · «tan… como» = <b>as… as</b>",
+ ex:["Manjula is longer than my cat.","This is the best day of my life!","My house is bigger than yours.","She is the most beautiful person I know.","I am as tall as you."],
+ qs:[
+  fl("Manjula is ___ than my cat.","longer",["longer","more long","longest"],"Adjetivo corto → +er + than."),
+  fl("This is ___ day of my life!","the best",["the best","the better","the goodest"],"Good → better → the best."),
+  fl("English is ___ than Chinese.","easier",["easyer","easier","more easy"],"Termina en y → ier."),
+  fl("She is ___ person I know.","the most beautiful",["the most beautiful","the beautifulest","more beautiful"],"Adjetivo largo → the most."),
+  mc("Comparativo de «bad»","worse",["badder","worse","worst"],"Bad → worse → the worst."),
+  od("Mi casa es más grande que la tuya","My house is bigger than yours",["more","then"],"Big → bigger (se duplica la g). Ojo: than (que), no then (entonces)."),
+  wr("el más alto",["the tallest"],"Tall → the tallest."),
+  ls("better than yesterday",["better than yesterday","better then yesterday","bitter than yesterday"],"Better than = mejor que."),
+  mc("«As tall as» significa…","tan alto como",["tan alto como","más alto que","el más alto"],"As … as = tan … como.","as tall as"),
+  fl("Today is ___ than yesterday.","hotter",["hoter","hotter","more hot"],"Hot → hotter (se duplica la t)."),
+  od("Es el restaurante más caro","It is the most expensive restaurant",["more","expensivest"],"Adjetivo largo → the most expensive.")
+ ]},
+{ic:"💪",title:"Can, must, should",cat:"Gramática",lvl:"Avanzado",
+ tip:"<b>can</b> = poder / saber hacer → I can swim.\n<b>must</b> = tener que (obligación fuerte) → You must stop.\n<b>mustn't</b> = está prohibido\n<b>should</b> = deberías (consejo) → You should rest.\n<b>could</b> = podría (pedido educado) → Could you help me?\n\nDespués de estos verbos: verbo base, SIN «to» y SIN -s.\n✔ She can swim · ✘ She cans swim · ✘ You should to rest",
+ ex:["I can swim very well.","You should see a doctor.","You must wear a seatbelt.","Could you help me, please?","You shouldn't eat so much."],
+ qs:[
+  fl("I ___ swim very well.","can",["can","must","should"],"Habilidad → can."),
+  fl("You ___ see a doctor. (consejo)","should",["should","can","will"],"Consejo → should."),
+  fl("You ___ wear a seatbelt. (obligatorio)","must",["must","can","should"],"Obligación fuerte → must."),
+  mc("¿Cuál está bien?","She can speak French",["She cans speak French","She can speaks French","She can speak French"],"Después de un modal: verbo base, sin -s."),
+  mc("¿Cuál está bien?","You should rest",["You should to rest","You should rest","You should resting"],"Nunca «to» después de should."),
+  od("¿Puedo abrir la ventana?","Can I open the window",["to","do"],"Pregunta: Can + I + verbo."),
+  wr("No puedo",["I can't","I cannot"],"Can't = cannot."),
+  ls("You shouldn't eat so much",["You shouldn't eat so much","You should eat so much","You couldn't eat so much"],"Shouldn't = no deberías."),
+  mc("«You mustn't smoke here» significa…","Está prohibido fumar aquí",["Está prohibido fumar aquí","No hace falta fumar aquí","Podés fumar aquí"],"Mustn't = prohibición.","You mustn't smoke here"),
+  od("Deberías aprender inglés","You should learn English",["to","must"],"Should + verbo, sin «to»."),
+  fl("___ you help me, please?","Could",["Could","Must","Should"],"«Could you…?» es una forma muy educada de pedir algo.")
+ ]},
+{ic:"✈️",title:"Viajes y experiencias",cat:"Frases",lvl:"Avanzado",
+ tip:"Presente perfecto: <b>have / has</b> + participio\nExperiencias: <b>I have been to London.</b> (estuve en Londres)\nRecién: <b>I have just arrived.</b> (acabo de llegar)\n<b>ever</b> = alguna vez · <b>never</b> = nunca\n<b>since</b> + momento (since 2020) · <b>for</b> + duración (for 5 years)\n\nParticipios: be → <b>been</b> · see → <b>seen</b> · eat → <b>eaten</b> · do → <b>done</b>\n\nAeropuerto: <b>boarding pass</b> tarjeta de embarque · <b>gate</b> puerta · <b>luggage</b> equipaje",
+ ex:["Have you ever been to London?","I have never seen that movie.","I have just arrived.","We have lived here since 2020.","Where is the boarding gate?"],
+ qs:[
+  fl("I have ___ to Paris.","been",["be","been","was"],"Experiencias de viaje: have been to."),
+  fl("She ___ finished her work.","has",["have","has","is"],"He / she / it → has."),
+  fl("Have you ___ seen snow?","ever",["ever","never","yet"],"Ever = alguna vez (en preguntas)."),
+  mc("Participio de «eat»","eaten",["ate","eaten","eated"],"Eat → ate → eaten."),
+  od("Nunca vi esa película","I have never seen that movie",["saw","did"],"Never va entre have y el participio."),
+  wr("Ya terminé",["I have finished","I have already finished","I already finished"],"I have finished (o I've finished)."),
+  ls("Have you ever been to London?",["Have you ever been to London?","Have you ever gone to London?","Did you ever been to London?"],"Have you ever been…? = ¿Alguna vez estuviste…?"),
+  mc("«I have just arrived» significa…","Acabo de llegar",["Acabo de llegar","Llegué ayer","Voy a llegar"],"Just = recién / acabo de.","I have just arrived"),
+  fl("We have lived here ___ 2020.","since",["since","for","from"],"Since + momento (desde 2020). For + duración (for 5 years)."),
+  fl("They have known each other ___ ten years.","for",["for","since"],"For + duración."),
+  mc("En el aeropuerto, «boarding pass» es…","tarjeta de embarque",["tarjeta de embarque","pasaporte","equipaje"],"Boarding pass = tarjeta de embarque. Passport = pasaporte. Luggage = equipaje.","boarding pass"),
+  od("¿Dónde está la puerta de embarque?","Where is the boarding gate",["door","are"],"En aeropuertos, la puerta se dice «gate».")
+ ]}
+];
+
+/* =========================================================
+   PROGRESO (se guarda en el celular)
+   ========================================================= */
+const KEY="manjula-ingles-v1";
+const DAILY_GOAL=2;
+const def=()=>({name:"",xp:0,streak:0,lastDay:"",stars:{},mistakes:[],free:false,sound:true,autoAudio:true,lessons:0,today:{d:"",n:0}});
+let P=load();
+function load(){try{const r=JSON.parse(localStorage.getItem(KEY));if(r)return Object.assign(def(),r)}catch(e){}return def()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(P))}catch(e){}}
+
+const dayStr=(d=new Date())=>d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+const yesterday=()=>{const d=new Date();d.setDate(d.getDate()-1);return dayStr(d)};
+const streakNow=()=>(P.lastDay===dayStr()||P.lastDay===yesterday())?P.streak:0;
+const todayCount=()=>P.today.d===dayStr()?P.today.n:0;
+const stars=u=>P.stars[u]||0;
+const unlocked=u=>P.free||u===0||stars(u-1)>=2;
+
+/* =========================================================
+   UTILIDADES
+   ========================================================= */
+const $=s=>document.querySelector(s);
+const app=$("#app");
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const CONTR={"i'm":"i am","you're":"you are","he's":"he is","she's":"she is","it's":"it is","we're":"we are","they're":"they are","don't":"do not","doesn't":"does not","didn't":"did not","isn't":"is not","aren't":"are not","wasn't":"was not","weren't":"were not","can't":"cannot","won't":"will not","shouldn't":"should not","mustn't":"must not","couldn't":"could not","i've":"i have","you've":"you have","we've":"we have","they've":"they have","i'll":"i will","you'll":"you will","she'll":"she will","he'll":"he will","i'd":"i would","there's":"there is"};
+function norm(s){
+  s=String(s).toLowerCase().replace(/[’‘`´]/g,"'").replace(/[.,!?¿¡;:"«»]/g," ").replace(/\s+/g," ").trim();
+  s=s.split(" ").map(w=>CONTR[w]||w).join(" ");
+  return s.replace(/\bcan not\b/g,"cannot");
+}
+
+/* Voz en inglés (gratis, la del iPhone) */
+let VOICE=null;
+function pickVoice(){
+  try{const vs=speechSynthesis.getVoices();
+  VOICE=vs.find(v=>/en[-_]US/i.test(v.lang)&&/Samantha|Ava|Allison|Google US/i.test(v.name))||vs.find(v=>/en[-_]US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null}catch(e){}
+}
+if("speechSynthesis" in window){pickVoice();try{speechSynthesis.onvoiceschanged=pickVoice}catch(e){}}
+function speak(t,slow){
+  if(!("speechSynthesis" in window))return;
+  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-US";if(!VOICE)pickVoice();if(VOICE)u.voice=VOICE;u.rate=slow?.55:.9;speechSynthesis.speak(u)}catch(e){}
+}
+let AC=null;
+function tone(ok){
+  if(!P.sound)return;
+  try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const t0=AC.currentTime;
+  (ok?[660,990]:[330,220]).forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.type=ok?"sine":"triangle";o.frequency.value=f;const s=t0+i*.12;g.gain.setValueAtTime(.0001,s);g.gain.exponentialRampToValueAtTime(.18,s+.02);g.gain.exponentialRampToValueAtTime(.0001,s+.2);o.connect(g);g.connect(AC.destination);o.start(s);o.stop(s+.22)})}catch(e){}
+}
+
+/* Manjula, la salchicha */
+function dog(mood="idle",cls=""){
+  return `<svg class="dog ${mood} ${cls}" viewBox="0 0 232 132" role="img" aria-label="Manjula, la salchicha">
+  <g class="all">
+    <path class="tail" d="M44 64 Q24 54 16 32" stroke="var(--dog-dark)" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <rect class="legA" x="50" y="92" width="15" height="30" rx="7.5" fill="var(--dog-dark)"/>
+    <rect class="legB" x="72" y="92" width="15" height="30" rx="7.5" fill="var(--dog)"/>
+    <rect class="legB" x="126" y="92" width="15" height="30" rx="7.5" fill="var(--dog-dark)"/>
+    <rect class="legA" x="148" y="92" width="15" height="30" rx="7.5" fill="var(--dog)"/>
+    <rect x="34" y="50" width="142" height="56" rx="28" fill="var(--dog)"/>
+    <ellipse cx="104" cy="96" rx="54" ry="8" fill="var(--dog-light)"/>
+    <rect x="152" y="46" width="13" height="48" rx="6" fill="var(--ketchup)" transform="rotate(-14 158 70)"/>
+    <circle cx="162" cy="94" r="6.5" fill="var(--mustard)"/>
+    <g class="head">
+      <circle cx="180" cy="46" r="27" fill="var(--dog)"/>
+      <ellipse cx="205" cy="57" rx="17" ry="12" fill="var(--dog-light)"/>
+      <ellipse cx="219" cy="52" rx="6" ry="5" fill="var(--nose)"/>
+      <path class="tongue" d="M203 64 q5 13 11 0 z" fill="var(--pink)"/>
+      <path d="M200 64 Q207 69 214 63" stroke="var(--nose)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <g class="eye"><circle cx="188" cy="38" r="5" fill="var(--nose)"/><circle cx="189.7" cy="36.3" r="1.7" fill="var(--white)"/></g>
+      <path class="brow" d="M181 27 L195 31" stroke="var(--nose)" stroke-width="2.5" stroke-linecap="round"/>
+      <path class="ear" d="M168 26 Q150 36 156 74 Q167 80 174 62 Q179 42 172 27 Z" fill="var(--dog-dark)"/>
+    </g>
+  </g></svg>`;
+}
+
+/* =========================================================
+   PANTALLAS
+   ========================================================= */
+let TAB="home";
+function go(tab){TAB=tab;window.scrollTo(0,0);render()}
+function render(){
+  if(!P.name)return welcome();
+  if(TAB==="practice")return practice();
+  if(TAB==="profile")return profile();
+  home();
+}
+function nav(){
+  const b=(id,ic,t)=>`<button class="${TAB===id?"on":""}" onclick="go('${id}')"><span>${ic}</span>${t}</button>`;
+  return `<nav class="nav"><div class="nav-in">${b("home","🗺️","Camino")}${b("practice","🎯","Práctica")}${b("profile","🌭","Mi perfil")}</div></nav>`;
+}
+
+/* --- Bienvenida --- */
+function welcome(){
+  app.innerHTML=`<div class="welcome wrap">
+    ${dog("happy")}
+    <h1>¡Hola! Soy Manjula</h1>
+    <p>Soy una salchicha que habla inglés. Te voy a acompañar en este libro durante los próximos meses. ¿Cómo te llamás?</p>
+    <form id="wf" class="col"><input id="wname" class="field" placeholder="Tu nombre" autocomplete="given-name" maxlength="24">
+    <button class="btn primary" type="submit">Empezar</button></form>
+  </div>`;
+  $("#wf").addEventListener("submit",e=>{e.preventDefault();const n=$("#wname").value.trim();if(!n){$("#wname").focus();return}P.name=n;save();render()});
+}
+
+/* --- Camino --- */
+function greeting(){
+  const n=esc(P.name),c=todayCount(),s=streakNow();
+  if(c>=DAILY_GOAL)return `¡Meta del día cumplida, ${n}! Si querés, repasá un poco más. 🎉`;
+  if(c===1)return `¡Vas muy bien, ${n}! Una lección más y cumplís la meta de hoy.`;
+  if(s>1)return `¡${s} días seguidos, ${n}! No cortes la racha.`;
+  const h=new Date().getHours();
+  return `${h<12?"Good morning":h<20?"Good afternoon":"Good evening"}, ${n}! ¿Practicamos un poquito?`;
+}
+function home(){
+  const cur=UNITS.findIndex((u,i)=>unlocked(i)&&stars(i)<3);
+  const offs=[0,58,78,58,0,-58,-78,-58];
+  let path="";
+  UNITS.forEach((u,i)=>{
+    if(i%4===0){const m=MONTHS[i/4];path+=`<div class="month"><b>${m.n}</b><span>${m.t}</span></div>`}
+    const st=!unlocked(i)?"locked":stars(i)>=3?"done":"";
+    const isCur=i===cur;
+    path+=`<div class="step" style="--off:${offs[i%8]}px">
+      <button class="node ${st} ${isCur?"current":""}" onclick="openUnit(${i})" aria-label="Unidad ${i+1}: ${esc(u.title)}">${st==="locked"?"🔒":u.ic}</button>
+      <div class="stars">${[0,1,2].map(k=>`<span class="${k<stars(i)?"":"off"}">★</span>`).join("")}</div>
+      <div class="nlabel">${esc(u.title)}</div></div>`;
+  });
+  const c=todayCount();
+  app.innerHTML=`<div class="home wrap">
+    <div class="top"><div><div class="book">El libro de inglés de</div><h1>${esc(P.name)}</h1></div>
+      <div class="pills"><span class="pill" title="Racha de días">🔥 ${streakNow()}</span><span class="pill" title="Puntos">⭐ ${P.xp}</span></div></div>
+    <div class="hero">${dog("idle")}<div class="bubble">${greeting()}</div></div>
+    <div class="goal"><div class="goal-row"><span>Meta de hoy</span><span>${Math.min(c,DAILY_GOAL)} / ${DAILY_GOAL} lecciones</span></div>
+      <div class="track"><i style="width:${Math.min(100,c/DAILY_GOAL*100)}%"></i></div></div>
+    <div class="path">${path}</div>
+    <div class="walker">${dog("walk")}</div>
+    <p class="muted" style="text-align:center;margin-top:8px">Manjula sigue caminando: pronto habrá más unidades.</p>
+  </div>${nav()}`;
+}
+
+/* --- Hoja de unidad --- */
+function closeSheet(){const o=$(".overlay");if(o)o.remove()}
+function sheet(html){closeSheet();const d=document.createElement("div");d.className="overlay";d.innerHTML=`<div class="sheet wrap">${html}</div>`;d.addEventListener("click",e=>{if(e.target===d)closeSheet()});document.body.appendChild(d)}
+function openUnit(i){
+  const u=UNITS[i],s=stars(i);
+  if(!unlocked(i)){
+    sheet(`<h2>${u.ic} ${esc(u.title)}</h2><p class="muted">Esta unidad todavía está cerrada. Completá 2 veces la unidad anterior («${esc(UNITS[i-1].title)}») para abrirla.</p><button class="btn ghost" onclick="closeSheet()">Entendido</button>`);return;
+  }
+  sheet(`<div class="chips"><span class="chip">Unidad ${i+1}</span><span class="chip">${u.cat}</span><span class="chip lvl-${u.lvl}">${u.lvl}</span></div>
+    <h2>${u.ic} ${esc(u.title)}</h2>
+    <p class="muted">${s>=3?"¡Unidad dominada! Podés repetirla las veces que quieras.":`Completada ${s} de 3 veces. ${s<2?`Con 2 se abre la siguiente unidad.`:"Una más y la dominás."}`}</p>
+    <button class="btn ghost" onclick="lessonIntro(${i})">📖 Ver la mini clase</button>
+    <button class="btn primary" onclick="startUnit(${i})">${s?"Practicar de nuevo":"Empezar lección"}</button>`);
+}
+
+/* --- Mini clase --- */
+function lessonIntro(i){
+  closeSheet();const u=UNITS[i];window.scrollTo(0,0);
+  app.innerHTML=`<div class="screen wrap">
+    <div class="backrow"><button class="iconbtn" onclick="render()" aria-label="Volver">✕</button><div class="book">Unidad ${i+1} · ${u.lvl}</div></div>
+    <div class="teach">${dog("idle")}<div class="bubble">Te explico ${esc(u.title.toLowerCase())} en un minuto. Tocá cada frase para escucharla.</div></div>
+    <div class="card tip">${u.tip}</div>
+    <div class="ex-list">${u.ex.map(x=>`<button class="ex" onclick="speak(this.dataset.t)" data-t="${esc(x)}"><span class="spk">🔊</span>${esc(x)}</button>`).join("")}</div>
+    <button class="btn primary" onclick="startUnit(${i})">¡A practicar!</button>
+  </div>`;
+}
+
+/* =========================================================
+   LECCIÓN
+   ========================================================= */
+let L=null;
+function startUnit(i){
+  closeSheet();
+  if(!P.stars[i]&&!L?.introSeen?.[i]&&stars(i)===0&&!sessionIntro[i]){sessionIntro[i]=1;return lessonIntro(i)}
+  const pool=UNITS[i].qs.map((q,k)=>({u:i,k}));
+  begin("unit",shuffle(pool).slice(0,8),i);
+}
+const sessionIntro={};
+function startPractice(cat,lvl){
+  let pool=[];
+  UNITS.forEach((u,i)=>{if(!unlocked(i))return;if(cat!=="Todas"&&u.cat!==cat)return;if(lvl!=="Todos"&&u.lvl!==lvl)return;u.qs.forEach((q,k)=>pool.push({u:i,k}))});
+  if(!pool.length){sheet(`<h2>Nada por acá todavía</h2><p class="muted">No hay unidades abiertas con ese filtro. Avanzá en el camino o elegí otra combinación.</p><button class="btn ghost" onclick="closeSheet()">Entendido</button>`);return}
+  begin("practice",shuffle(pool).slice(0,10));
+}
+function startMistakes(){
+  const pool=P.mistakes.map(s=>{const[u,k]=s.split("-").map(Number);return{u,k}}).filter(x=>UNITS[x.u]&&UNITS[x.u].qs[x.k]);
+  if(!pool.length)return;
+  begin("mistakes",shuffle(pool).slice(0,10));
+}
+function begin(mode,items,unit){
+  L={mode,unit,queue:items.map(x=>({...x,tries:0})),total:items.length,done:0,firstOk:0,cur:null,sel:null,checked:false};
+  window.scrollTo(0,0);next();
+}
+const Q=it=>UNITS[it.u].qs[it.k];
+function displayAnswer(q){return q.t==="fill"?q.s.replace("___",q.a):q.t==="ord"||q.t==="wr"?q.a[0]:q.a}
+function sayText(q){return q.t==="mc"?(q.say||q.a):q.t==="fill"?q.s.replace(/\s*\(.*?\)/,"").replace("___",q.a):q.t==="ord"||q.t==="wr"?q.a[0]:q.a}
+
+function next(){
+  if(!L.queue.length)return finish();
+  L.cur=L.queue.shift();L.sel=null;L.checked=false;
+  const q=Q(L.cur);
+  if(q.t==="mc"||q.t==="fill"||q.t==="lis")L.opts=shuffle(q.o);
+  if(q.t==="ord"){const words=q.a[0].split(" ").concat(q.x||[]);L.tiles=shuffle(words).map((w,id)=>({w,id}));L.chosen=[]}
+  drawLesson();
+  if(q.t==="lis")setTimeout(()=>speak(q.a),250);
+}
+function drawLesson(){
+  const q=Q(L.cur);
+  const pct=Math.round(L.done/L.total*100);
+  let body="";
+  const optBtns=(speakOpts)=>`<div class="opts">${L.opts.map((o,n)=>`<button class="opt ${L.sel===o?"sel":""}" onclick="choose(${n},${speakOpts?1:0})">${esc(o)}</button>`).join("")}</div>`;
+  if(q.t==="mc")body=`<div class="qlabel">${esc(q.q)}</div>${optBtns(!q.say)}`;
+  if(q.t==="fill"){
+    const parts=q.s.split("___");
+    body=`<div class="qlabel">Completá la frase</div><div class="sentence">${esc(parts[0])}<span class="blank">${L.sel?esc(L.sel):"&nbsp;"}</span>${esc(parts[1]||"")}</div>${optBtns(false)}`;
+  }
+  if(q.t==="lis")body=`<div class="qlabel">¿Qué escuchaste?</div>
+    <div class="listen-row"><button class="bigspk" onclick="speak(Q(L.cur).a)" aria-label="Escuchar">🔊</button><button class="bigspk slow" onclick="speak(Q(L.cur).a,true)" aria-label="Escuchar lento">🐢</button></div>${optBtns(false)}`;
+  if(q.t==="ord")body=`<div class="qlabel">Traducí ordenando las palabras</div><div class="qsub">${esc(q.es)}</div>
+    <div class="answer-zone">${L.chosen.map(id=>`<button class="tile" onclick="untile(${id})">${esc(L.tiles[id].w)}</button>`).join("")}</div>
+    <div class="bank">${L.tiles.map(t=>`<button class="tile ${L.chosen.includes(t.id)?"used":""}" onclick="tile(${t.id})">${esc(t.w)}</button>`).join("")}</div>`;
+  if(q.t==="wr")body=`<div class="qlabel">Escribí en inglés</div><div class="qsub">${esc(q.es)}</div>
+    <textarea id="wrin" class="write" placeholder="Escribí acá…" autocapitalize="off" autocorrect="off" spellcheck="false" oninput="L.sel=this.value;$('#check').disabled=!this.value.trim()" onkeydown="if(event.key==='Enter'){event.preventDefault();if(this.value.trim())check()}">${L.sel?esc(L.sel):""}</textarea>`;
+  app.innerHTML=`<div class="lesson wrap">
+    <div class="lhead"><button class="iconbtn" onclick="quitLesson()" aria-label="Salir">✕</button><div class="track"><i style="width:${pct}%"></i></div></div>
+    <div class="lbody">${body}</div>
+  </div>
+  <div class="lfoot"><div class="lfoot-in wrap"><button id="check" class="btn primary" onclick="check()" ${hasAnswer()?"":"disabled"}>Comprobar</button></div></div>`;
+}
+function hasAnswer(){const q=Q(L.cur);if(q.t==="ord")return L.chosen.length>0;return !!(L.sel&&String(L.sel).trim())}
+function choose(n,sp){if(L.checked)return;L.sel=L.opts[n];if(sp)speak(L.sel);drawLesson()}
+function tile(id){if(L.checked||L.chosen.includes(id))return;L.chosen.push(id);speak(L.tiles[id].w);drawLesson()}
+function untile(id){if(L.checked)return;L.chosen=L.chosen.filter(x=>x!==id);drawLesson()}
+function quitLesson(){
+  sheet(`<div style="width:120px">${dog("sad")}</div><h2>¿Seguro que querés salir?</h2><p class="muted">Si salís ahora, se pierde el avance de esta lección.</p>
+  <button class="btn primary" onclick="closeSheet()">Seguir aprendiendo</button><button class="btn ghost" onclick="closeSheet();L=null;render()">Salir</button>`);
+}
+
+function check(){
+  if(L.checked||!hasAnswer())return;
+  const q=Q(L.cur);
+  let ans=q.t==="ord"?L.chosen.map(id=>L.tiles[id].w).join(" "):L.sel;
+  let ok;
+  if(q.t==="wr"||q.t==="ord")ok=q.a.some(a=>norm(a)===norm(ans));
+  else ok=ans===q.a;
+  L.checked=true;
+  const key=L.cur.u+"-"+L.cur.k;
+  if(ok){
+    L.done++;if(L.cur.tries===0)L.firstOk++;
+    if(L.mode==="mistakes")P.mistakes=P.mistakes.filter(x=>x!==key);
+  }else{
+    L.cur.tries++;
+    if(!P.mistakes.includes(key))P.mistakes.push(key);
+    if(L.cur.tries<3)L.queue.push(L.cur);else L.done++;
+  }
+  save();tone(ok);
+  // marcar opciones
+  document.querySelectorAll(".opt").forEach(b=>{if(b.textContent===q.a)b.classList.add("right");else if(b.textContent===ans&&!ok)b.classList.add("wrong")});
+  const w=$("#wrin");if(w)w.readOnly=true;
+  showFeedback(ok,q,ans);
+}
+const PRAISE=["¡Muy bien!","¡Excelente!","¡Genial!","¡Así se hace!","¡Perfecto!","¡Qué crack!"];
+const OOPS=["¡Ups! Casi.","No pasa nada, aprendamos.","¡Ay! Mirá esto:","Casi, casi…"];
+function showFeedback(ok,q,ans){
+  const say=sayText(q);
+  const disp=displayAnswer(q);
+  const yours=(!ok&&q.t!=="mc"&&q.t!=="lis")?`<div><span class="lab">Tu respuesta</span><div class="yours">${esc(q.t==="fill"?q.s.replace("___",ans):ans)}</div></div>`:"";
+  const explain=q.e?`<div style="margin-top:6px"><span class="lab">Por qué</span><div>${esc(q.e)}</div></div>`:"";
+  const inner=ok
+    ?`<div class="fb-ans"><button class="spk" onclick="speak(this.dataset.t)" data-t="${esc(say)}" aria-label="Escuchar">🔊</button><span>${esc(disp)}</span></div>${q.t==="wr"&&norm(ans)!==norm(q.a[0])?`<div class="muted">También se dice: ${esc(q.a[0])}</div>`:""}`
+    :`<span class="lab">Se dice así</span><div class="fb-ans"><button class="spk" onclick="speak(this.dataset.t)" data-t="${esc(say)}" aria-label="Escuchar">🔊</button><span>${esc(disp)}</span></div>${yours}${explain}`;
+  const f=document.createElement("div");
+  f.className="fb "+(ok?"ok":"bad");f.id="fb";
+  f.innerHTML=`<div class="fb-in wrap">
+    <div class="fb-top"><div class="fb-dog">${dog(ok?"happy":"sad")}</div><div class="fb-title">${ok?pick(PRAISE):pick(OOPS)}</div></div>
+    <div class="fb-bubble">${inner}</div>
+    <button class="btn ${ok?"green":"red"}" onclick="cont()">Continuar</button></div>`;
+  document.body.appendChild(f);
+  const lf=$(".lfoot");if(lf)lf.hidden=true;
+  if(P.autoAudio)setTimeout(()=>speak(say),ok?350:500);
+}
+function cont(){const f=$("#fb");if(f)f.remove();window.scrollTo(0,0);next()}
+
+function finish(){
+  const acc=Math.round(L.firstOk/L.total*100);
+  const xp=10+L.firstOk+(acc===100?5:0);
+  P.xp+=xp;P.lessons++;
+  const t=dayStr();
+  if(P.lastDay!==t){P.streak=(P.lastDay===yesterday())?P.streak+1:1;P.lastDay=t}
+  if(P.today.d!==t)P.today={d:t,n:0};P.today.n++;
+  let msg="¡Lección terminada!",extra="";
+  if(L.mode==="unit"){
+    const before=stars(L.unit);P.stars[L.unit]=Math.min(3,before+1);
+    if(before<2&&P.stars[L.unit]>=2&&L.unit+1<UNITS.length&&!P.free)extra=`¡Abriste la unidad «${esc(UNITS[L.unit+1].title)}»! 🔓`;
+    else if(P.stars[L.unit]===3&&before<3)extra=`¡Dominaste «${esc(UNITS[L.unit].title)}»! 🏆`;
+  }
+  if(L.mode==="mistakes")msg="¡Errores repasados!";
+  save();
+  const m=L.mode,u=L.unit;L=null;window.scrollTo(0,0);
+  app.innerHTML=`<div class="screen result wrap">
+    ${dog("happy")}
+    <h1 style="font-size:32px">${msg}</h1>
+    ${extra?`<p class="muted" style="font-weight:800;color:var(--ink)">${extra}</p>`:""}
+    <div class="statgrid"><div class="stat"><b>+${xp}</b><span>puntos</span></div><div class="stat"><b>${acc}%</b><span>aciertos</span></div><div class="stat"><b>🔥 ${P.streak}</b><span>racha</span></div></div>
+    <p class="muted">${acc===100?"¡Sin errores! Manjula está orgullosa.":acc>=70?"¡Muy bien! Los errores quedaron guardados para repasar.":"Cada error es una palabra nueva aprendida. ¡Repasalos en Práctica!"}</p>
+    <div class="col">
+      ${m==="unit"?`<button class="btn ghost" onclick="startUnit(${u})">Repetir</button>`:""}
+      <button class="btn primary" onclick="go('${m==="unit"?"home":"practice"}')">Continuar</button>
+    </div></div>`;
+}
+
+/* =========================================================
+   PRÁCTICA
+   ========================================================= */
+let FCAT="Todas",FLVL="Todos";
+function practice(){
+  const cats=["Todas","Gramática","Vocabulario","Frases"],lvls=["Todos","Básico","Intermedio","Avanzado"];
+  const n=P.mistakes.length;
+  app.innerHTML=`<div class="page wrap">
+    <h1>Práctica libre</h1>
+    <div class="card mistake-card">${dog(n?"sad":"happy")}<div class="col" style="gap:8px">
+      <b>${n?`Tenés ${n} ${n===1?"error":"errores"} para repasar`:"No tenés errores pendientes"}</b>
+      <span class="muted">${n?"Manjula los guardó. Cuando los respondas bien, desaparecen.":"¡Impecable! Seguí así."}</span>
+      ${n?`<button class="btn red" onclick="startMistakes()">Repasar errores</button>`:""}</div></div>
+    <div class="card col">
+      <div><div class="lbl">Categoría</div><div class="choose">${cats.map(c=>`<button class="${FCAT===c?"on":""}" onclick="FCAT='${c}';practice()">${c}</button>`).join("")}</div></div>
+      <div><div class="lbl">Dificultad</div><div class="choose">${lvls.map(c=>`<button class="${FLVL===c?"on":""}" onclick="FLVL='${c}';practice()">${c}</button>`).join("")}</div></div>
+      <p class="muted">10 preguntas mezcladas de las unidades que ya abriste.</p>
+      <button class="btn primary" onclick="startPractice(FCAT,FLVL)">Practicar</button>
+    </div>
+    <div class="card col"><div class="lbl">Repasar una unidad</div>
+      ${UNITS.map((u,i)=>unlocked(i)?`<div class="row"><span>${u.ic} ${esc(u.title)} <span class="muted">· ${u.lvl}</span></span><button class="spk" onclick="lessonIntro(${i})" aria-label="Ver mini clase">📖</button></div>`:"").join("")}
+    </div>
+  </div>${nav()}`;
+}
+
+/* =========================================================
+   PERFIL
+   ========================================================= */
+let resetArm=false;
+function profile(){
+  const mastered=UNITS.filter((u,i)=>stars(i)>=3).length;
+  const totalStars=UNITS.reduce((a,u,i)=>a+stars(i),0);
+  app.innerHTML=`<div class="page wrap">
+    <div class="teach">${dog("idle")}<div class="bubble">Este es tu libro, ${esc(P.name)}. Ya tenés ${totalStars} de ${UNITS.length*3} estrellas.</div></div>
+    <div class="statgrid"><div class="stat"><b>⭐ ${P.xp}</b><span>puntos</span></div><div class="stat"><b>🔥 ${streakNow()}</b><span>racha</span></div><div class="stat"><b>${P.lessons}</b><span>lecciones</span></div></div>
+    <div class="track" style="height:18px"><i style="width:${totalStars/(UNITS.length*3)*100}%;background:var(--green)"></i></div>
+    <p class="muted" style="text-align:center">${mastered} de ${UNITS.length} unidades dominadas</p>
+    <div class="card">
+      <div class="lbl">Tu nombre</div>
+      <form id="nf" style="display:flex;gap:8px"><input id="pname" class="field" value="${esc(P.name)}" maxlength="24" style="flex:1;min-width:0"><button class="btn primary" style="width:auto" type="submit">OK</button></form>
+    </div>
+    <div class="card">
+      <div class="row"><span>Sonidos de acierto y error</span><button class="switch ${P.sound?"on":""}" onclick="P.sound=!P.sound;save();profile()" aria-label="Sonidos"></button></div>
+      <div class="row"><span>Escuchar la respuesta automáticamente</span><button class="switch ${P.autoAudio?"on":""}" onclick="P.autoAudio=!P.autoAudio;save();profile()" aria-label="Audio automático"></button></div>
+      <div class="row"><span>Modo libre<br><span class="muted">Abre todas las unidades</span></span><button class="switch ${P.free?"on":""}" onclick="P.free=!P.free;save();profile()" aria-label="Modo libre"></button></div>
+    </div>
+    <button class="btn ghost" onclick="speak('Hello! I am Manjula. Let\\'s learn English together!')">🔊 Probar la voz</button>
+    <button class="btn ${resetArm?"red":"ghost"}" onclick="doReset()">${resetArm?"Tocá otra vez para borrar todo":"Borrar mi progreso"}</button>
+  </div>${nav()}`;
+  $("#nf").addEventListener("submit",e=>{e.preventDefault();const n=$("#pname").value.trim();if(n){P.name=n;save();profile()}});
+}
+function doReset(){
+  if(!resetArm){resetArm=true;profile();setTimeout(()=>{if(resetArm){resetArm=false;if(TAB==="profile")profile()}},4000);return}
+  resetArm=false;const n=P.name;P=def();P.name=n;save();go("home");
+}
+
+render();
+</script>
